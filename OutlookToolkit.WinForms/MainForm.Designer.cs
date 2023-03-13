@@ -42,10 +42,12 @@
             // 
             // menuStrip1
             // 
+            menuStrip1.ImageScalingSize = new Size(20, 20);
             menuStrip1.Items.AddRange(new ToolStripItem[] { fileToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
-            menuStrip1.Size = new Size(800, 24);
+            menuStrip1.Padding = new Padding(7, 3, 0, 3);
+            menuStrip1.Size = new Size(914, 30);
             menuStrip1.TabIndex = 0;
             menuStrip1.Text = "menuStrip1";
             // 
@@ -53,56 +55,62 @@
             // 
             fileToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { toolStripMenuItemOpen, toolStripSeparator1, toolStripMenuItemExit });
             fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            fileToolStripMenuItem.Size = new Size(37, 20);
+            fileToolStripMenuItem.Size = new Size(46, 24);
             fileToolStripMenuItem.Text = "File";
             // 
             // toolStripMenuItemOpen
             // 
             toolStripMenuItemOpen.Name = "toolStripMenuItemOpen";
-            toolStripMenuItemOpen.Size = new Size(144, 22);
+            toolStripMenuItemOpen.Size = new Size(181, 26);
             toolStripMenuItemOpen.Text = "Open PST file";
             toolStripMenuItemOpen.Click += toolStripMenuItemOpen_Click;
             // 
             // toolStripSeparator1
             // 
             toolStripSeparator1.Name = "toolStripSeparator1";
-            toolStripSeparator1.Size = new Size(141, 6);
+            toolStripSeparator1.Size = new Size(178, 6);
             // 
             // toolStripMenuItemExit
             // 
             toolStripMenuItemExit.Name = "toolStripMenuItemExit";
-            toolStripMenuItemExit.Size = new Size(144, 22);
+            toolStripMenuItemExit.Size = new Size(181, 26);
             toolStripMenuItemExit.Text = "Exit";
             toolStripMenuItemExit.Click += toolStripMenuItemExit_Click;
             // 
             // openFileDialogOutlookFile
             // 
             openFileDialogOutlookFile.FileName = "openFileDialogOutlookFile";
-            openFileDialogOutlookFile.Filter = "Local Data Files|*.pst|Online Data Files|*.ost|All Files|*.*";
+            openFileDialogOutlookFile.Filter = "Online Data Files|*.ost|Local Data Files|*.pst|All Files|*.*";
             openFileDialogOutlookFile.Title = "Open Outlook Data File";
             // 
             // statusStrip1
             // 
+            statusStrip1.ImageScalingSize = new Size(20, 20);
             statusStrip1.Items.AddRange(new ToolStripItem[] { toolStripStatusLabelOutlookFileName });
-            statusStrip1.Location = new Point(0, 428);
+            statusStrip1.Location = new Point(0, 574);
             statusStrip1.Name = "statusStrip1";
-            statusStrip1.Size = new Size(800, 22);
+            statusStrip1.Padding = new Padding(1, 0, 16, 0);
+            statusStrip1.Size = new Size(914, 26);
             statusStrip1.TabIndex = 1;
             statusStrip1.Text = "statusStrip1";
             // 
             // toolStripStatusLabelOutlookFileName
             // 
             toolStripStatusLabelOutlookFileName.Name = "toolStripStatusLabelOutlookFileName";
-            toolStripStatusLabelOutlookFileName.Size = new Size(0, 17);
+            toolStripStatusLabelOutlookFileName.Size = new Size(140, 20);
+            toolStripStatusLabelOutlookFileName.Text = "Outlook File Name: ";
+            toolStripStatusLabelOutlookFileName.TextAlign = ContentAlignment.MiddleLeft;
+            toolStripStatusLabelOutlookFileName.Visible = false;
             // 
             // MainForm
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(914, 600);
             Controls.Add(statusStrip1);
             Controls.Add(menuStrip1);
             MainMenuStrip = menuStrip1;
+            Margin = new Padding(3, 4, 3, 4);
             Name = "MainForm";
             Text = "Outlook Toolkit";
             menuStrip1.ResumeLayout(false);

@@ -1,14 +1,41 @@
+using System.Diagnostics.Eventing.Reader;
+
 namespace OutlookToolkit.WinForms
 {
     public partial class MainForm : Form
     {
-        MainFormViewModel viewModel;
+        private GuiController controller;
+        private MainFormViewModel viewModel;
 
-        public MainForm()
+        public MainForm(MainFormViewModel viewModelIn, GuiController controllerIn)
         {
             InitializeComponent();
 
-            viewModel = new MainFormViewModel();
+            controller = controllerIn;
+
+            viewModel = viewModelIn;
+            viewModel.PropertyChanged += ViewModel_PropertyChanged;
+        }
+
+        private void ViewModel_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            switch (e.PropertyName)
+            {
+                case "OutlookDataFileName":
+                    {
+                        if (string.IsNullOrEmpty(viewModel.OutlookDataFileName))
+                        {
+                            toolStripStatusLabelOutlookFileName.Text = $"Outlook File Name: none opened";
+                            toolStripStatusLabelOutlookFileName.Visible = false;
+                        }
+                        else
+                        {
+                            toolStripStatusLabelOutlookFileName.Text = $"Outlook File Name: {viewModel.OutlookDataFileName}";
+                            toolStripStatusLabelOutlookFileName.Visible = true;
+                        }
+                        break;
+                    }
+            }
         }
 
         private void toolStripMenuItemExit_Click(object sender, EventArgs e)
@@ -20,7 +47,7 @@ namespace OutlookToolkit.WinForms
         {
             if (DialogResult.OK == openFileDialogOutlookFile.ShowDialog())
             {
-                viewModel.OutlookDataFileName = openFileDialogOutlookFile.FileName;
+                controller.OpenOutlookFile(openFileDialogOutlookFile.FileName);
             }
         }
     }
