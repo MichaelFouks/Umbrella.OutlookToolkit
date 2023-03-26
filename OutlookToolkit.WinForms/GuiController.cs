@@ -37,29 +37,17 @@ namespace OutlookToolkit.WinForms
             if (success)
             {
                 mainFormViewModel.StoreName = filePath;
+                mainFormViewModel.OutlookStoresToolbarVisible = false;
             }
         }
 
-        internal void OpenOutlookStore() 
+        internal void ListOutlookStore() 
         {
-            bool success = false;
-
             IEnumerable<string> availableStoreNames 
                 = OutlookStoreProvider.GetAvailableOutlookStores().OrderBy(qentry => qentry);
 
-            SelectOutlookStoreFormViewModel selectOutlookStoreFormViewModel = new(availableStoreNames);
-            SelectOutlookStoreForm selectOutlookStoreForm = new(selectOutlookStoreFormViewModel, this);
-            if (DialogResult.OK == selectOutlookStoreForm.ShowDialog())
-            {
-                OutlookStoreProvider storePtovider = new(selectOutlookStoreFormViewModel.SelectedOutlookStoreName);
-                mainFormViewModel.MailItems = storePtovider.GetMailItems();
-            }
-
-            success = true;
-
-            if (success)
-            {
-            }
+            mainFormViewModel.OutlookStoresToolbarVisible= true;   
+            mainFormViewModel.AvailableOutlookStoreNames= availableStoreNames;
         }
     }
 }

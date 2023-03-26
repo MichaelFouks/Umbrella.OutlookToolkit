@@ -11,6 +11,8 @@ namespace OutlookToolkit.WinForms
         {
             InitializeComponent();
 
+            toolStripOutlookStores.Visible = false;
+
             controller = controllerIn;
 
             viewModel = viewModelIn;
@@ -21,8 +23,7 @@ namespace OutlookToolkit.WinForms
         {
             switch (e.PropertyName)
             {
-                case "StoreName" +
-                "":
+                case "StoreName":
                     {
                         if (string.IsNullOrEmpty(viewModel.StoreName))
                         {
@@ -34,6 +35,28 @@ namespace OutlookToolkit.WinForms
                             toolStripStatusLabelStoreName.Text = $"Outlook File Name: {viewModel.StoreName}";
                             toolStripStatusLabelStoreName.Visible = true;
                         }
+                        break;
+                    }
+                case "OutlookStoresToolbarVisible":
+                    {
+                        toolStripOutlookStores.Visible = viewModel.OutlookStoresToolbarVisible;
+                        break;
+                    }
+                case "AvailableOutlookStoreNames":
+                    {
+                        if (
+                            viewModel.AvailableOutlookStoreNames is null
+                            ||
+                            !viewModel.AvailableOutlookStoreNames.Any()
+                        )
+                        {
+                            toolStripComboBoxOutlookStores.Items.Clear();
+                        }
+                        else
+                        {
+                            toolStripComboBoxOutlookStores.Items.AddRange(viewModel.AvailableOutlookStoreNames.ToArray());
+                        }
+
                         break;
                     }
             }
@@ -54,7 +77,12 @@ namespace OutlookToolkit.WinForms
 
         private void toolStripMenuItemOpenStore_Click(object sender, EventArgs e)
         {
-            controller.OpenOutlookStore();
+            controller.ListOutlookStore();
+        }
+
+        private void toolStripComboBoxOutlookStores_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

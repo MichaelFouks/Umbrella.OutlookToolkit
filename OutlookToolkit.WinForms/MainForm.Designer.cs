@@ -31,14 +31,18 @@
             menuStrip1 = new MenuStrip();
             fileToolStripMenuItem = new ToolStripMenuItem();
             toolStripMenuItemOpen = new ToolStripMenuItem();
-            toolStripMenuItemOpenStore = new ToolStripMenuItem();
+            toolStripMenuItemWorkWithOutlookStores = new ToolStripMenuItem();
             toolStripSeparator1 = new ToolStripSeparator();
             toolStripMenuItemExit = new ToolStripMenuItem();
             openFileDialogPstFile = new OpenFileDialog();
             statusStrip1 = new StatusStrip();
             toolStripStatusLabelStoreName = new ToolStripStatusLabel();
+            toolStripOutlookStores = new ToolStrip();
+            toolStripLabelOutlookStores = new ToolStripLabel();
+            toolStripComboBoxOutlookStores = new ToolStripComboBox();
             menuStrip1.SuspendLayout();
             statusStrip1.SuspendLayout();
+            toolStripOutlookStores.SuspendLayout();
             SuspendLayout();
             // 
             // menuStrip1
@@ -54,7 +58,7 @@
             // 
             // fileToolStripMenuItem
             // 
-            fileToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { toolStripMenuItemOpen, toolStripMenuItemOpenStore, toolStripSeparator1, toolStripMenuItemExit });
+            fileToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { toolStripMenuItemOpen, toolStripMenuItemWorkWithOutlookStores, toolStripSeparator1, toolStripMenuItemExit });
             fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             fileToolStripMenuItem.Size = new Size(46, 24);
             fileToolStripMenuItem.Text = "File";
@@ -62,26 +66,26 @@
             // toolStripMenuItemOpen
             // 
             toolStripMenuItemOpen.Name = "toolStripMenuItemOpen";
-            toolStripMenuItemOpen.Size = new Size(305, 26);
+            toolStripMenuItemOpen.Size = new Size(260, 26);
             toolStripMenuItemOpen.Text = "Open PST file";
             toolStripMenuItemOpen.Click += toolStripMenuItemOpen_Click;
             // 
-            // toolStripMenuItemOpenStore
+            // toolStripMenuItemWorkWithOutlookStores
             // 
-            toolStripMenuItemOpenStore.Name = "toolStripMenuItemOpenStore";
-            toolStripMenuItemOpenStore.Size = new Size(305, 26);
-            toolStripMenuItemOpenStore.Text = "Open Outlook Application Store";
-            toolStripMenuItemOpenStore.Click += toolStripMenuItemOpenStore_Click;
+            toolStripMenuItemWorkWithOutlookStores.Name = "toolStripMenuItemWorkWithOutlookStores";
+            toolStripMenuItemWorkWithOutlookStores.Size = new Size(260, 26);
+            toolStripMenuItemWorkWithOutlookStores.Text = "Work with Outlook Stores";
+            toolStripMenuItemWorkWithOutlookStores.Click += toolStripMenuItemOpenStore_Click;
             // 
             // toolStripSeparator1
             // 
             toolStripSeparator1.Name = "toolStripSeparator1";
-            toolStripSeparator1.Size = new Size(302, 6);
+            toolStripSeparator1.Size = new Size(257, 6);
             // 
             // toolStripMenuItemExit
             // 
             toolStripMenuItemExit.Name = "toolStripMenuItemExit";
-            toolStripMenuItemExit.Size = new Size(305, 26);
+            toolStripMenuItemExit.Size = new Size(260, 26);
             toolStripMenuItemExit.Text = "Exit";
             toolStripMenuItemExit.Click += toolStripMenuItemExit_Click;
             // 
@@ -95,10 +99,10 @@
             // 
             statusStrip1.ImageScalingSize = new Size(20, 20);
             statusStrip1.Items.AddRange(new ToolStripItem[] { toolStripStatusLabelStoreName });
-            statusStrip1.Location = new Point(0, 574);
+            statusStrip1.Location = new Point(0, 578);
             statusStrip1.Name = "statusStrip1";
             statusStrip1.Padding = new Padding(1, 0, 16, 0);
-            statusStrip1.Size = new Size(914, 26);
+            statusStrip1.Size = new Size(914, 22);
             statusStrip1.TabIndex = 1;
             statusStrip1.Text = "statusStrip1";
             // 
@@ -110,11 +114,36 @@
             toolStripStatusLabelStoreName.TextAlign = ContentAlignment.MiddleLeft;
             toolStripStatusLabelStoreName.Visible = false;
             // 
+            // toolStripOutlookStores
+            // 
+            toolStripOutlookStores.ImageScalingSize = new Size(20, 20);
+            toolStripOutlookStores.Items.AddRange(new ToolStripItem[] { toolStripLabelOutlookStores, toolStripComboBoxOutlookStores });
+            toolStripOutlookStores.Location = new Point(0, 30);
+            toolStripOutlookStores.Name = "toolStripOutlookStores";
+            toolStripOutlookStores.Size = new Size(914, 28);
+            toolStripOutlookStores.TabIndex = 2;
+            toolStripOutlookStores.Text = "Outlook Stores";
+            // 
+            // toolStripLabelOutlookStores
+            // 
+            toolStripLabelOutlookStores.Name = "toolStripLabelOutlookStores";
+            toolStripLabelOutlookStores.Size = new Size(110, 25);
+            toolStripLabelOutlookStores.Text = "Outlook Stores:";
+            // 
+            // toolStripComboBoxOutlookStores
+            // 
+            toolStripComboBoxOutlookStores.DropDownStyle = ComboBoxStyle.DropDownList;
+            toolStripComboBoxOutlookStores.Name = "toolStripComboBoxOutlookStores";
+            toolStripComboBoxOutlookStores.Size = new Size(250, 28);
+            toolStripComboBoxOutlookStores.Sorted = true;
+            toolStripComboBoxOutlookStores.SelectedIndexChanged += toolStripComboBoxOutlookStores_SelectedIndexChanged;
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(914, 600);
+            Controls.Add(toolStripOutlookStores);
             Controls.Add(statusStrip1);
             Controls.Add(menuStrip1);
             MainMenuStrip = menuStrip1;
@@ -125,6 +154,8 @@
             menuStrip1.PerformLayout();
             statusStrip1.ResumeLayout(false);
             statusStrip1.PerformLayout();
+            toolStripOutlookStores.ResumeLayout(false);
+            toolStripOutlookStores.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -139,6 +170,9 @@
         private OpenFileDialog openFileDialogPstFile;
         private StatusStrip statusStrip1;
         private ToolStripStatusLabel toolStripStatusLabelStoreName;
-        private ToolStripMenuItem toolStripMenuItemOpenStore;
+        private ToolStripMenuItem toolStripMenuItemWorkWithOutlookStores;
+        private ToolStrip toolStripOutlookStores;
+        private ToolStripLabel toolStripLabelOutlookStores;
+        private ToolStripComboBox toolStripComboBoxOutlookStores;
     }
 }

@@ -14,6 +14,8 @@ namespace OutlookToolkit.WinForms
     {
         private string? storeName;
         private IEnumerable<MailItem> mailItems;
+        private bool outlookStoresToolbarVisible = true;
+        private IEnumerable<string>? availableOutlookStoreNames;
 
         public string? StoreName
         {
@@ -34,6 +36,27 @@ namespace OutlookToolkit.WinForms
                 NotifyPropertyChanged();
             }
         }
+
+        public bool OutlookStoresToolbarVisible 
+        { 
+            get => outlookStoresToolbarVisible;
+            set 
+            { 
+                outlookStoresToolbarVisible = value;
+                NotifyPropertyChanged();
+            }
+        }
+
+        public IEnumerable<string>? AvailableOutlookStoreNames
+        {
+            get => availableOutlookStoreNames;
+            set
+            {
+                availableOutlookStoreNames = value;
+                NotifyPropertyChanged();
+            }
+        }
+
 
         #region INotifyPropertyChanged implementation
 
