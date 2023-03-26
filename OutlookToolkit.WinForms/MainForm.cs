@@ -21,17 +21,18 @@ namespace OutlookToolkit.WinForms
         {
             switch (e.PropertyName)
             {
-                case "OutlookDataFileName":
+                case "StoreName" +
+                "":
                     {
-                        if (string.IsNullOrEmpty(viewModel.OutlookDataFileName))
+                        if (string.IsNullOrEmpty(viewModel.StoreName))
                         {
-                            toolStripStatusLabelOutlookFileName.Text = $"Outlook File Name: none opened";
-                            toolStripStatusLabelOutlookFileName.Visible = false;
+                            toolStripStatusLabelStoreName.Text = $"Outlook File Name: none opened";
+                            toolStripStatusLabelStoreName.Visible = false;
                         }
                         else
                         {
-                            toolStripStatusLabelOutlookFileName.Text = $"Outlook File Name: {viewModel.OutlookDataFileName}";
-                            toolStripStatusLabelOutlookFileName.Visible = true;
+                            toolStripStatusLabelStoreName.Text = $"Outlook File Name: {viewModel.StoreName}";
+                            toolStripStatusLabelStoreName.Visible = true;
                         }
                         break;
                     }
@@ -45,10 +46,15 @@ namespace OutlookToolkit.WinForms
 
         private void toolStripMenuItemOpen_Click(object sender, EventArgs e)
         {
-            if (DialogResult.OK == openFileDialogOutlookFile.ShowDialog())
+            if (DialogResult.OK == openFileDialogPstFile.ShowDialog())
             {
-                controller.OpenOutlookFile(openFileDialogOutlookFile.FileName);
+                controller.OpenPstFile(openFileDialogPstFile.FileName);
             }
+        }
+
+        private void toolStripMenuItemOpenStore_Click(object sender, EventArgs e)
+        {
+            controller.OpenOutlookStore();
         }
     }
 }

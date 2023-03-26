@@ -12,7 +12,7 @@ namespace OutlookToolkit.WinForms
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
 
-            GuiController controller = new GuiController();
+            GuiController controller = new();
 
             controller.Start();
         }

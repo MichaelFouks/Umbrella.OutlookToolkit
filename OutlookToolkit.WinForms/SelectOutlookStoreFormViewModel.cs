@@ -5,32 +5,37 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.Office.Interop.Outlook;
-
 
 namespace OutlookToolkit.WinForms
 {
-    public class MainFormViewModel : INotifyPropertyChanged
+    public class SelectOutlookStoreFormViewModel : INotifyPropertyChanged
     {
-        private string? storeName;
-        private IEnumerable<MailItem> mailItems;
+        private IEnumerable<string>? availableOutlookStoreNames;
+        private string? selectedOutlookStoreName;
 
-        public string? StoreName
+        private SelectOutlookStoreFormViewModel() { }
+
+        public SelectOutlookStoreFormViewModel(IEnumerable<string> availableOutlookStoreNamesIn) 
+        { 
+            availableOutlookStoreNames = availableOutlookStoreNamesIn ?? throw new ArgumentNullException(nameof(availableOutlookStoreNamesIn));
+        }
+
+        public IEnumerable<string>? AvailableOutlookStoreNames
         {
-            get => storeName;
+            get => availableOutlookStoreNames;
             set
             {
-                storeName = value;
+                availableOutlookStoreNames = value;
                 NotifyPropertyChanged();
             }
         }
 
-        public IEnumerable<MailItem> MailItems 
+        public string? SelectedOutlookStoreName 
         { 
-            get => mailItems;
+            get => selectedOutlookStoreName;
             set
             {
-                mailItems = value;
+                selectedOutlookStoreName = value;
                 NotifyPropertyChanged();
             }
         }
