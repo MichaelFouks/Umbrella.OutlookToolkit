@@ -12,6 +12,7 @@ namespace OutlookToolkit.WinForms
             InitializeComponent();
 
             toolStripOutlookStores.Visible = false;
+            splitContainerOutlookStores.Visible = false;
 
             controller = controllerIn;
 
@@ -40,6 +41,7 @@ namespace OutlookToolkit.WinForms
                 case "OutlookStoresToolbarVisible":
                     {
                         toolStripOutlookStores.Visible = viewModel.OutlookStoresToolbarVisible;
+                        splitContainerOutlookStores.Visible = viewModel.OutlookStoresToolbarVisible;
                         break;
                     }
                 case "AvailableOutlookStoreNames":

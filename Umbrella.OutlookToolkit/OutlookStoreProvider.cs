@@ -54,7 +54,7 @@ namespace Umbrella.OutlookToolkit
             MAPIFolder rootFolder = store.GetRootFolder();
 
 #if DEBUG
-            foreach(Folder folder in rootFolder.Folders) 
+            foreach (Folder folder in rootFolder.Folders) 
             {
                 Debug.WriteLine($"Folder Name: {folder.Name}; folder Entry ID: {folder.EntryID}; folder path: {folder.FullFolderPath}");
             }
