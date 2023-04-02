@@ -65,17 +65,58 @@ namespace Umbrella.OutlookToolkit
             List<MailItem> result = new();
             foreach (var item in inboxFolder.Items)
             {
-                if (item is MailItem)
+                if (item is MailItem mailItem)
                 {
-                    MailItem? mailItem = item as MailItem;
-                    if (mailItem != null)
-                    {
-                        result.Add((MailItem)item);
-                    }
+                    result.Add(mailItem);
                 }
             }
 
             return result;
+        }
+
+        public StoreFolder GetStoreFolders()
+        {
+            Application application = new Application();
+            NameSpace outlookNamespaces = application.GetNamespace("MAPI");
+
+            // Login using default profile
+            outlookNamespaces.Logon(application.DefaultProfileName);
+
+            Store store = outlookNamespaces.Stores[storeName];
+            MAPIFolder rootFolder = store.GetRootFolder();
+
+            StoreFolder rootFolderModel = new StoreFolder()
+            {
+                Name = rootFolder.Name,
+                FullPath = rootFolder.FullFolderPath,
+                EntryId = rootFolder.EntryID,
+                ParentFolder = null
+            };
+
+            foreach(MAPIFolder childFolder in rootFolder.Folders)
+            {
+                if (
+                    childFolder.DefaultItemType == OlItemType.olMailItem
+                    &&  (
+                            childFolder.Folders.Count > 0
+                            || childFolder.Items.Count > 0  
+                        )
+                    )
+                {
+
+                    StoreFolder childFolderModel = new StoreFolder()
+                    {
+                        Name = childFolder.Name,
+                        FullPath = childFolder.FullFolderPath,
+                        EntryId = childFolder.EntryID,
+                        ParentFolder = rootFolderModel
+                    };
+
+                    rootFolderModel.Folders.Add(childFolderModel);
+                }
+            }
+
+            return rootFolderModel;
         }
     }
 }

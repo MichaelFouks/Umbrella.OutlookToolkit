@@ -10,5 +10,6 @@ namespace Umbrella.OutlookToolkit
     public interface IStoreProvider
     {
         public IEnumerable<MailItem> GetMailItems();
+        public StoreFolder GetStoreFolders();
     }
 }

@@ -59,5 +59,9 @@ namespace Umbrella.OutlookToolkit
             return items;
         }
 
+        public StoreFolder GetStoreFolders()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

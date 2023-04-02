@@ -41,13 +41,20 @@ namespace OutlookToolkit.WinForms
             }
         }
 
-        internal void ListOutlookStore() 
+        internal void ListOutlookStores() 
         {
             IEnumerable<string> availableStoreNames 
                 = OutlookStoreProvider.GetAvailableOutlookStores().OrderBy(qentry => qentry);
 
             mainFormViewModel.OutlookStoresToolbarVisible= true;   
             mainFormViewModel.AvailableOutlookStoreNames= availableStoreNames;
+        }
+
+        internal void PopulateOutlookStoreInfo(string outlookStoreName)
+        {
+            OutlookStoreProvider provider = new OutlookStoreProvider(outlookStoreName);
+
+            mainFormViewModel.RootFolder = provider.GetStoreFolders();
         }
     }
 }

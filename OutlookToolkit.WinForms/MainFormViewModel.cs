@@ -6,7 +6,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Office.Interop.Outlook;
-
+using Umbrella.OutlookToolkit;
 
 namespace OutlookToolkit.WinForms
 {
@@ -16,6 +16,7 @@ namespace OutlookToolkit.WinForms
         private IEnumerable<MailItem> mailItems;
         private bool outlookStoresToolbarVisible = true;
         private IEnumerable<string>? availableOutlookStoreNames;
+        private StoreFolder? rootFolder;
 
         public string? StoreName
         {
@@ -27,8 +28,8 @@ namespace OutlookToolkit.WinForms
             }
         }
 
-        public IEnumerable<MailItem> MailItems 
-        { 
+        public IEnumerable<MailItem> MailItems
+        {
             get => mailItems;
             set
             {
@@ -37,11 +38,11 @@ namespace OutlookToolkit.WinForms
             }
         }
 
-        public bool OutlookStoresToolbarVisible 
-        { 
+        public bool OutlookStoresToolbarVisible
+        {
             get => outlookStoresToolbarVisible;
-            set 
-            { 
+            set
+            {
                 outlookStoresToolbarVisible = value;
                 NotifyPropertyChanged();
             }
@@ -57,6 +58,15 @@ namespace OutlookToolkit.WinForms
             }
         }
 
+        public StoreFolder? RootFolder 
+        { 
+            get => rootFolder;
+            set 
+            { 
+                rootFolder = value;
+                NotifyPropertyChanged();
+            }
+        }
 
         #region INotifyPropertyChanged implementation
 

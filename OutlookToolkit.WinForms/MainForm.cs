@@ -1,4 +1,5 @@
 using System.Diagnostics.Eventing.Reader;
+using Umbrella.OutlookToolkit;
 
 namespace OutlookToolkit.WinForms
 {
@@ -61,6 +62,22 @@ namespace OutlookToolkit.WinForms
 
                         break;
                     }
+                case "RootFolder":
+                    {
+                        treeViewOutlookStoreFolders.BeginUpdate();
+
+                        treeViewOutlookStoreFolders.Nodes.Clear();
+
+                        foreach (StoreFolder folder in viewModel.RootFolder.Folders)
+                        {
+                            treeViewOutlookStoreFolders.Nodes.Add(folder.FullPath, folder.Name);
+                        }
+                        
+
+                        treeViewOutlookStoreFolders.EndUpdate();
+
+                        break;
+                    }
             }
         }
 
@@ -79,12 +96,12 @@ namespace OutlookToolkit.WinForms
 
         private void toolStripMenuItemOpenStore_Click(object sender, EventArgs e)
         {
-            controller.ListOutlookStore();
+            controller.ListOutlookStores();
         }
 
         private void toolStripComboBoxOutlookStores_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            controller.PopulateOutlookStoreInfo((string)toolStripComboBoxOutlookStores.SelectedItem);
         }
     }
 }
