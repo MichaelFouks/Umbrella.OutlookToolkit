@@ -11,6 +11,7 @@ namespace Umbrella.OutlookToolkit
         public StoreFolder()
         { 
             Folders = new List<StoreFolder>();
+            EmailItems = new List<StoreEmailItem>();
         }
 
         public StoreFolder? ParentFolder {get;set;}
@@ -22,5 +23,11 @@ namespace Umbrella.OutlookToolkit
         public string? FullPath { get; set; }
 
         public string EntryId { get; set; }
+
+        public List<StoreEmailItem> EmailItems { get; set; }
+
+        public int? MailItemsCount { get; set; }
+
+        public int? FoldersCount { get; set; }
     }
 }

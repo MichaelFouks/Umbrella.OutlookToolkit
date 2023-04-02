@@ -68,9 +68,13 @@ namespace OutlookToolkit.WinForms
 
                         treeViewOutlookStoreFolders.Nodes.Clear();
 
-                        foreach (StoreFolder folder in viewModel.RootFolder.Folders)
+                        foreach (StoreFolder folderModel in viewModel.RootFolder.Folders)
                         {
-                            treeViewOutlookStoreFolders.Nodes.Add(folder.FullPath, folder.Name);
+                            treeViewOutlookStoreFolders.Nodes.Add(
+
+                                folderModel.FullPath,
+                                $"{folderModel.Name}, folders: {folderModel.FoldersCount}, items: {folderModel.MailItemsCount}"   
+                            );
                         }
                         
 

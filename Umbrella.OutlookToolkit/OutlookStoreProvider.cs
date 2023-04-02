@@ -109,12 +109,32 @@ namespace Umbrella.OutlookToolkit
                         Name = childFolder.Name,
                         FullPath = childFolder.FullFolderPath,
                         EntryId = childFolder.EntryID,
-                        ParentFolder = rootFolderModel
+                        ParentFolder = rootFolderModel, 
+                        FoldersCount = childFolder.Folders.Count, 
+                        MailItemsCount = childFolder.Items.Count
                     };
 
                     rootFolderModel.Folders.Add(childFolderModel);
+
+                    //foreach (object item in childFolder.Items)
+                    //{
+                    //    if (item is MailItem mailItem)
+                    //    {
+                    //        StoreEmailItem mailItemModel = new StoreEmailItem()
+                    //        {
+                    //            ParentFolder = childFolderModel,
+                    //            EntryId = mailItem.EntryID,
+                    //            Subject = mailItem.Subject,
+                    //            Body = mailItem.Body,
+                    //            SentOn = mailItem.SentOn
+                    //        };
+
+                    //        childFolderModel.EmailItems.Add(mailItemModel);
+                    //    }
+                    //}
                 }
             }
+
 
             return rootFolderModel;
         }
