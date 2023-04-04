@@ -10,15 +10,17 @@ namespace Umbrella.OutlookToolkit
     {
         public StoreFolder? ParentFolder { get; set; }
 
-        public string EntryId { get; set; }
+        public string? EntryId { get; set; }
 
-        public string Subject { get; set; }
+        public string? Subject { get; set; }
 
-        public string Body { get; set; }
+        public string? Body { get; set; }
 
         public DateTime SentOn { get; set; }
 
+        public string? SenderName { get; set; }
 
+        public string? SenderEmail { get; set;}
 
     }
 }

@@ -17,6 +17,7 @@ namespace OutlookToolkit.WinForms
         private bool outlookStoresToolbarVisible = true;
         private IEnumerable<string>? availableOutlookStoreNames;
         private StoreFolder? rootFolder;
+        private StoreFolder? selectedStoreFolder;
 
         public string? StoreName
         {
@@ -58,12 +59,22 @@ namespace OutlookToolkit.WinForms
             }
         }
 
-        public StoreFolder? RootFolder 
-        { 
+        public StoreFolder? RootFolder
+        {
             get => rootFolder;
-            set 
-            { 
+            set
+            {
                 rootFolder = value;
+                NotifyPropertyChanged();
+            }
+        }
+
+        public StoreFolder? SelectedStoreFolder
+        {
+            get => selectedStoreFolder;
+            set
+            {
+                selectedStoreFolder = value;
                 NotifyPropertyChanged();
             }
         }

@@ -52,9 +52,30 @@ namespace OutlookToolkit.WinForms
 
         internal void PopulateOutlookStoreInfo(string outlookStoreName)
         {
-            OutlookStoreProvider provider = new OutlookStoreProvider(outlookStoreName);
+            if (outlookStoreName is null || string.IsNullOrEmpty(outlookStoreName))
+            {
+                throw new ArgumentNullException(nameof(outlookStoreName));
+            }
 
+            IStoreProvider provider = new OutlookStoreProvider(outlookStoreName);
+
+            mainFormViewModel.StoreName = outlookStoreName;
             mainFormViewModel.RootFolder = provider.GetStoreFolders();
+        }
+
+        internal void GetFolderExportGetails(string outlookStoreName, string folderEntryId)
+        {
+            if (outlookStoreName is null || string.IsNullOrEmpty(outlookStoreName))
+            {
+                throw new ArgumentNullException(nameof(outlookStoreName));
+            }
+            if (folderEntryId is null || string.IsNullOrEmpty(folderEntryId))
+            {
+                throw new ArgumentNullException(nameof(folderEntryId));
+            }
+
+            IStoreProvider provider = new OutlookStoreProvider(outlookStoreName);
+            mainFormViewModel.SelectedStoreFolder = provider.GetStoreFolder(folderEntryId);
         }
     }
 }

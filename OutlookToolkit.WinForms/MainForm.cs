@@ -14,6 +14,7 @@ namespace OutlookToolkit.WinForms
 
             toolStripOutlookStores.Visible = false;
             splitContainerOutlookStores.Visible = false;
+            groupBoxSelectedFolderDetails.Visible = false;
 
             controller = controllerIn;
 
@@ -70,15 +71,30 @@ namespace OutlookToolkit.WinForms
 
                         foreach (StoreFolder folderModel in viewModel.RootFolder.Folders)
                         {
-                            treeViewOutlookStoreFolders.Nodes.Add(
+                            TreeNode node = treeViewOutlookStoreFolders.Nodes.Add(
 
                                 folderModel.FullPath,
-                                $"{folderModel.Name}, folders: {folderModel.FoldersCount}, items: {folderModel.MailItemsCount}"   
+                                $"{folderModel.Name}, folders: {folderModel.FoldersCount}, items: {folderModel.MailItemsCount}"
                             );
+                            node.Tag = folderModel.EntryId;
                         }
-                        
+
 
                         treeViewOutlookStoreFolders.EndUpdate();
+
+                        break;
+                    }
+                case "SelectedStoreFolder":
+                    {
+                        groupBoxSelectedFolderDetails.Visible = viewModel.SelectedStoreFolder != null;
+
+                        if (viewModel.SelectedStoreFolder != null)
+                        {
+                            labelSelectedFolderFullPath.Text = viewModel.SelectedStoreFolder.FullPath;
+                            labelSelectedFolderName.Text = viewModel.SelectedStoreFolder.Name;
+                            labelSelectedFolderNumberOfEmailItems.Text = viewModel.SelectedStoreFolder.MailItemsCount.ToString();
+                            labelSelectedFolderNumberOfSubfolders.Text=viewModel.SelectedStoreFolder.FoldersCount.ToString();
+                        }
 
                         break;
                     }
@@ -106,6 +122,16 @@ namespace OutlookToolkit.WinForms
         private void toolStripComboBoxOutlookStores_SelectedIndexChanged(object sender, EventArgs e)
         {
             controller.PopulateOutlookStoreInfo((string)toolStripComboBoxOutlookStores.SelectedItem);
+        }
+
+        private void treeViewOutlookStoreFolders_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
+        {
+            controller.GetFolderExportGetails(viewModel.StoreName, e.Node.Tag as string);
+        }
+
+        private void tableLayoutPanelSelectedFolderDetails_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }

@@ -63,5 +63,10 @@ namespace Umbrella.OutlookToolkit
         {
             throw new NotImplementedException();
         }
+
+        public StoreFolder? GetStoreFolder(string entryId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

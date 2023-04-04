@@ -135,8 +135,41 @@ namespace Umbrella.OutlookToolkit
                 }
             }
 
-
             return rootFolderModel;
+        }
+
+        public StoreFolder? GetStoreFolder(string entryId)
+        {
+            if( entryId == null || string.IsNullOrEmpty(entryId) )
+            {
+                throw new ArgumentNullException(nameof(entryId));
+            }
+
+            Application application = new();
+            NameSpace outlookNamespaces = application.GetNamespace("MAPI");
+
+            // Login using default profile
+            outlookNamespaces.Logon(application.DefaultProfileName);
+
+            Store store = outlookNamespaces.Stores[storeName];
+            MAPIFolder rootFolder = store.GetRootFolder();
+
+            foreach (MAPIFolder childFolder in rootFolder.Folders)
+            {
+                if (childFolder.EntryID == entryId)
+                {
+                    return new StoreFolder()
+                        {
+                            Name = childFolder.Name,
+                            FullPath = childFolder.FullFolderPath,
+                            EntryId = childFolder.EntryID,
+                            MailItemsCount = childFolder.Items.Count,
+                            FoldersCount = childFolder.Folders.Count
+                        };
+                }
+            }
+
+            return null;
         }
     }
 }

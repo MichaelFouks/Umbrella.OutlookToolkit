@@ -43,6 +43,16 @@
             splitContainerOutlookStores = new SplitContainer();
             groupBoxOutlookStoreFolders = new GroupBox();
             treeViewOutlookStoreFolders = new TreeView();
+            groupBoxSelectedFolderDetails = new GroupBox();
+            tableLayoutPanelSelectedFolderDetails = new TableLayoutPanel();
+            label1 = new Label();
+            label2 = new Label();
+            label3 = new Label();
+            label4 = new Label();
+            labelSelectedFolderName = new Label();
+            labelSelectedFolderFullPath = new Label();
+            labelSelectedFolderNumberOfSubfolders = new Label();
+            labelSelectedFolderNumberOfEmailItems = new Label();
             panel1 = new Panel();
             panel2 = new Panel();
             menuStrip1.SuspendLayout();
@@ -50,8 +60,11 @@
             toolStripOutlookStores.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)splitContainerOutlookStores).BeginInit();
             splitContainerOutlookStores.Panel1.SuspendLayout();
+            splitContainerOutlookStores.Panel2.SuspendLayout();
             splitContainerOutlookStores.SuspendLayout();
             groupBoxOutlookStoreFolders.SuspendLayout();
+            groupBoxSelectedFolderDetails.SuspendLayout();
+            tableLayoutPanelSelectedFolderDetails.SuspendLayout();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
             SuspendLayout();
@@ -158,6 +171,10 @@
             // splitContainerOutlookStores.Panel1
             // 
             splitContainerOutlookStores.Panel1.Controls.Add(groupBoxOutlookStoreFolders);
+            // 
+            // splitContainerOutlookStores.Panel2
+            // 
+            splitContainerOutlookStores.Panel2.Controls.Add(groupBoxSelectedFolderDetails);
             splitContainerOutlookStores.Size = new Size(914, 514);
             splitContainerOutlookStores.SplitterDistance = 304;
             splitContainerOutlookStores.TabIndex = 3;
@@ -180,6 +197,112 @@
             treeViewOutlookStoreFolders.Name = "treeViewOutlookStoreFolders";
             treeViewOutlookStoreFolders.Size = new Size(298, 488);
             treeViewOutlookStoreFolders.TabIndex = 0;
+            treeViewOutlookStoreFolders.NodeMouseClick += treeViewOutlookStoreFolders_NodeMouseClick;
+            // 
+            // groupBoxSelectedFolderDetails
+            // 
+            groupBoxSelectedFolderDetails.Controls.Add(tableLayoutPanelSelectedFolderDetails);
+            groupBoxSelectedFolderDetails.Dock = DockStyle.Top;
+            groupBoxSelectedFolderDetails.Location = new Point(0, 0);
+            groupBoxSelectedFolderDetails.Name = "groupBoxSelectedFolderDetails";
+            groupBoxSelectedFolderDetails.Size = new Size(606, 201);
+            groupBoxSelectedFolderDetails.TabIndex = 0;
+            groupBoxSelectedFolderDetails.TabStop = false;
+            groupBoxSelectedFolderDetails.Text = "Folder Details";
+            // 
+            // tableLayoutPanelSelectedFolderDetails
+            // 
+            tableLayoutPanelSelectedFolderDetails.ColumnCount = 2;
+            tableLayoutPanelSelectedFolderDetails.ColumnStyles.Add(new ColumnStyle());
+            tableLayoutPanelSelectedFolderDetails.ColumnStyles.Add(new ColumnStyle());
+            tableLayoutPanelSelectedFolderDetails.Controls.Add(label1, 0, 0);
+            tableLayoutPanelSelectedFolderDetails.Controls.Add(label2, 0, 1);
+            tableLayoutPanelSelectedFolderDetails.Controls.Add(label3, 0, 3);
+            tableLayoutPanelSelectedFolderDetails.Controls.Add(label4, 0, 2);
+            tableLayoutPanelSelectedFolderDetails.Controls.Add(labelSelectedFolderName, 1, 0);
+            tableLayoutPanelSelectedFolderDetails.Controls.Add(labelSelectedFolderFullPath, 1, 1);
+            tableLayoutPanelSelectedFolderDetails.Controls.Add(labelSelectedFolderNumberOfSubfolders, 1, 2);
+            tableLayoutPanelSelectedFolderDetails.Controls.Add(labelSelectedFolderNumberOfEmailItems, 1, 3);
+            tableLayoutPanelSelectedFolderDetails.Dock = DockStyle.Fill;
+            tableLayoutPanelSelectedFolderDetails.Location = new Point(3, 23);
+            tableLayoutPanelSelectedFolderDetails.Name = "tableLayoutPanelSelectedFolderDetails";
+            tableLayoutPanelSelectedFolderDetails.RowCount = 5;
+            tableLayoutPanelSelectedFolderDetails.RowStyles.Add(new RowStyle(SizeType.Absolute, 30F));
+            tableLayoutPanelSelectedFolderDetails.RowStyles.Add(new RowStyle(SizeType.Absolute, 30F));
+            tableLayoutPanelSelectedFolderDetails.RowStyles.Add(new RowStyle(SizeType.Absolute, 30F));
+            tableLayoutPanelSelectedFolderDetails.RowStyles.Add(new RowStyle(SizeType.Absolute, 30F));
+            tableLayoutPanelSelectedFolderDetails.RowStyles.Add(new RowStyle());
+            tableLayoutPanelSelectedFolderDetails.Size = new Size(600, 175);
+            tableLayoutPanelSelectedFolderDetails.TabIndex = 0;
+            tableLayoutPanelSelectedFolderDetails.Paint += tableLayoutPanelSelectedFolderDetails_Paint;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new Point(3, 0);
+            label1.Name = "label1";
+            label1.Size = new Size(98, 20);
+            label1.TabIndex = 0;
+            label1.Text = "Folder Name:";
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Location = new Point(3, 30);
+            label2.Name = "label2";
+            label2.Size = new Size(113, 20);
+            label2.TabIndex = 1;
+            label2.Text = "Full folder path:";
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Location = new Point(3, 90);
+            label3.Name = "label3";
+            label3.Size = new Size(165, 20);
+            label3.TabIndex = 2;
+            label3.Text = "Number of email items:";
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Location = new Point(3, 60);
+            label4.Name = "label4";
+            label4.Size = new Size(157, 20);
+            label4.TabIndex = 3;
+            label4.Text = "Number of subfolders:";
+            // 
+            // labelSelectedFolderName
+            // 
+            labelSelectedFolderName.AutoSize = true;
+            labelSelectedFolderName.Location = new Point(174, 0);
+            labelSelectedFolderName.Name = "labelSelectedFolderName";
+            labelSelectedFolderName.Size = new Size(0, 20);
+            labelSelectedFolderName.TabIndex = 4;
+            // 
+            // labelSelectedFolderFullPath
+            // 
+            labelSelectedFolderFullPath.AutoSize = true;
+            labelSelectedFolderFullPath.Location = new Point(174, 30);
+            labelSelectedFolderFullPath.Name = "labelSelectedFolderFullPath";
+            labelSelectedFolderFullPath.Size = new Size(0, 20);
+            labelSelectedFolderFullPath.TabIndex = 5;
+            // 
+            // labelSelectedFolderNumberOfSubfolders
+            // 
+            labelSelectedFolderNumberOfSubfolders.AutoSize = true;
+            labelSelectedFolderNumberOfSubfolders.Location = new Point(174, 60);
+            labelSelectedFolderNumberOfSubfolders.Name = "labelSelectedFolderNumberOfSubfolders";
+            labelSelectedFolderNumberOfSubfolders.Size = new Size(0, 20);
+            labelSelectedFolderNumberOfSubfolders.TabIndex = 6;
+            // 
+            // labelSelectedFolderNumberOfEmailItems
+            // 
+            labelSelectedFolderNumberOfEmailItems.AutoSize = true;
+            labelSelectedFolderNumberOfEmailItems.Location = new Point(174, 90);
+            labelSelectedFolderNumberOfEmailItems.Name = "labelSelectedFolderNumberOfEmailItems";
+            labelSelectedFolderNumberOfEmailItems.Size = new Size(0, 20);
+            labelSelectedFolderNumberOfEmailItems.TabIndex = 7;
             // 
             // panel1
             // 
@@ -219,9 +342,13 @@
             toolStripOutlookStores.ResumeLayout(false);
             toolStripOutlookStores.PerformLayout();
             splitContainerOutlookStores.Panel1.ResumeLayout(false);
+            splitContainerOutlookStores.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)splitContainerOutlookStores).EndInit();
             splitContainerOutlookStores.ResumeLayout(false);
             groupBoxOutlookStoreFolders.ResumeLayout(false);
+            groupBoxSelectedFolderDetails.ResumeLayout(false);
+            tableLayoutPanelSelectedFolderDetails.ResumeLayout(false);
+            tableLayoutPanelSelectedFolderDetails.PerformLayout();
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             panel2.ResumeLayout(false);
@@ -248,5 +375,15 @@
         private TreeView treeViewOutlookStoreFolders;
         private Panel panel1;
         private Panel panel2;
+        private GroupBox groupBoxSelectedFolderDetails;
+        private TableLayoutPanel tableLayoutPanelSelectedFolderDetails;
+        private Label label1;
+        private Label label2;
+        private Label label3;
+        private Label label4;
+        private Label labelSelectedFolderName;
+        private Label labelSelectedFolderFullPath;
+        private Label labelSelectedFolderNumberOfSubfolders;
+        private Label labelSelectedFolderNumberOfEmailItems;
     }
 }
