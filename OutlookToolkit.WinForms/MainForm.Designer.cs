@@ -197,7 +197,7 @@
             treeViewOutlookStoreFolders.Name = "treeViewOutlookStoreFolders";
             treeViewOutlookStoreFolders.Size = new Size(298, 488);
             treeViewOutlookStoreFolders.TabIndex = 0;
-            treeViewOutlookStoreFolders.NodeMouseClick += treeViewOutlookStoreFolders_NodeMouseClick;
+            treeViewOutlookStoreFolders.AfterSelect += treeViewOutlookStoreFolders_AfterSelect;
             // 
             // groupBoxSelectedFolderDetails
             // 
@@ -205,7 +205,7 @@
             groupBoxSelectedFolderDetails.Dock = DockStyle.Top;
             groupBoxSelectedFolderDetails.Location = new Point(0, 0);
             groupBoxSelectedFolderDetails.Name = "groupBoxSelectedFolderDetails";
-            groupBoxSelectedFolderDetails.Size = new Size(606, 201);
+            groupBoxSelectedFolderDetails.Size = new Size(606, 148);
             groupBoxSelectedFolderDetails.TabIndex = 0;
             groupBoxSelectedFolderDetails.TabStop = false;
             groupBoxSelectedFolderDetails.Text = "Folder Details";
@@ -232,9 +232,8 @@
             tableLayoutPanelSelectedFolderDetails.RowStyles.Add(new RowStyle(SizeType.Absolute, 30F));
             tableLayoutPanelSelectedFolderDetails.RowStyles.Add(new RowStyle(SizeType.Absolute, 30F));
             tableLayoutPanelSelectedFolderDetails.RowStyles.Add(new RowStyle());
-            tableLayoutPanelSelectedFolderDetails.Size = new Size(600, 175);
+            tableLayoutPanelSelectedFolderDetails.Size = new Size(600, 122);
             tableLayoutPanelSelectedFolderDetails.TabIndex = 0;
-            tableLayoutPanelSelectedFolderDetails.Paint += tableLayoutPanelSelectedFolderDetails_Paint;
             // 
             // label1
             // 

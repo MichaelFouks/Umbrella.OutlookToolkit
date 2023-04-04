@@ -93,7 +93,7 @@ namespace OutlookToolkit.WinForms
                             labelSelectedFolderFullPath.Text = viewModel.SelectedStoreFolder.FullPath;
                             labelSelectedFolderName.Text = viewModel.SelectedStoreFolder.Name;
                             labelSelectedFolderNumberOfEmailItems.Text = viewModel.SelectedStoreFolder.MailItemsCount.ToString();
-                            labelSelectedFolderNumberOfSubfolders.Text=viewModel.SelectedStoreFolder.FoldersCount.ToString();
+                            labelSelectedFolderNumberOfSubfolders.Text = viewModel.SelectedStoreFolder.FoldersCount.ToString();
                         }
 
                         break;
@@ -124,14 +124,9 @@ namespace OutlookToolkit.WinForms
             controller.PopulateOutlookStoreInfo((string)toolStripComboBoxOutlookStores.SelectedItem);
         }
 
-        private void treeViewOutlookStoreFolders_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
+        private void treeViewOutlookStoreFolders_AfterSelect(object sender, TreeViewEventArgs e)
         {
             controller.GetFolderExportGetails(viewModel.StoreName, e.Node.Tag as string);
-        }
-
-        private void tableLayoutPanelSelectedFolderDetails_Paint(object sender, PaintEventArgs e)
-        {
-
         }
     }
 }
