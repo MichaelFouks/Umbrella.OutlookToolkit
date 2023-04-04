@@ -18,6 +18,7 @@ namespace OutlookToolkit.WinForms
         private IEnumerable<string>? availableOutlookStoreNames;
         private StoreFolder? rootFolder;
         private StoreFolder? selectedStoreFolder;
+        private string? archiveFolderPath;
 
         public string? StoreName
         {
@@ -75,6 +76,16 @@ namespace OutlookToolkit.WinForms
             set
             {
                 selectedStoreFolder = value;
+                NotifyPropertyChanged();
+            }
+        }
+
+        public string? ArchiveFolderPath
+        {
+            get => archiveFolderPath; 
+            set 
+            { 
+                archiveFolderPath = value;
                 NotifyPropertyChanged();
             }
         }

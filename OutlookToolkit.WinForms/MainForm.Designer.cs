@@ -43,6 +43,12 @@
             splitContainerOutlookStores = new SplitContainer();
             groupBoxOutlookStoreFolders = new GroupBox();
             treeViewOutlookStoreFolders = new TreeView();
+            groupBoxExportDetails = new GroupBox();
+            tableLayoutPanelFolderExportDetails = new TableLayoutPanel();
+            label5 = new Label();
+            flowLayoutPanelArchiveRootFolder = new FlowLayoutPanel();
+            buttonSelectArchiveRootFolder = new Button();
+            labelArchiveRootFolder = new Label();
             groupBoxSelectedFolderDetails = new GroupBox();
             tableLayoutPanelSelectedFolderDetails = new TableLayoutPanel();
             label1 = new Label();
@@ -55,6 +61,7 @@
             labelSelectedFolderNumberOfEmailItems = new Label();
             panel1 = new Panel();
             panel2 = new Panel();
+            folderBrowserDialogArchiveRootFolder = new FolderBrowserDialog();
             menuStrip1.SuspendLayout();
             statusStrip1.SuspendLayout();
             toolStripOutlookStores.SuspendLayout();
@@ -63,6 +70,9 @@
             splitContainerOutlookStores.Panel2.SuspendLayout();
             splitContainerOutlookStores.SuspendLayout();
             groupBoxOutlookStoreFolders.SuspendLayout();
+            groupBoxExportDetails.SuspendLayout();
+            tableLayoutPanelFolderExportDetails.SuspendLayout();
+            flowLayoutPanelArchiveRootFolder.SuspendLayout();
             groupBoxSelectedFolderDetails.SuspendLayout();
             tableLayoutPanelSelectedFolderDetails.SuspendLayout();
             panel1.SuspendLayout();
@@ -174,6 +184,7 @@
             // 
             // splitContainerOutlookStores.Panel2
             // 
+            splitContainerOutlookStores.Panel2.Controls.Add(groupBoxExportDetails);
             splitContainerOutlookStores.Panel2.Controls.Add(groupBoxSelectedFolderDetails);
             splitContainerOutlookStores.Size = new Size(914, 514);
             splitContainerOutlookStores.SplitterDistance = 304;
@@ -198,6 +209,73 @@
             treeViewOutlookStoreFolders.Size = new Size(298, 488);
             treeViewOutlookStoreFolders.TabIndex = 0;
             treeViewOutlookStoreFolders.AfterSelect += treeViewOutlookStoreFolders_AfterSelect;
+            // 
+            // groupBoxExportDetails
+            // 
+            groupBoxExportDetails.Controls.Add(tableLayoutPanelFolderExportDetails);
+            groupBoxExportDetails.Dock = DockStyle.Fill;
+            groupBoxExportDetails.Location = new Point(0, 148);
+            groupBoxExportDetails.Name = "groupBoxExportDetails";
+            groupBoxExportDetails.Size = new Size(606, 366);
+            groupBoxExportDetails.TabIndex = 1;
+            groupBoxExportDetails.TabStop = false;
+            groupBoxExportDetails.Text = "Folder export details";
+            // 
+            // tableLayoutPanelFolderExportDetails
+            // 
+            tableLayoutPanelFolderExportDetails.ColumnCount = 2;
+            tableLayoutPanelFolderExportDetails.ColumnStyles.Add(new ColumnStyle());
+            tableLayoutPanelFolderExportDetails.ColumnStyles.Add(new ColumnStyle());
+            tableLayoutPanelFolderExportDetails.Controls.Add(label5, 0, 0);
+            tableLayoutPanelFolderExportDetails.Controls.Add(flowLayoutPanelArchiveRootFolder, 1, 0);
+            tableLayoutPanelFolderExportDetails.Dock = DockStyle.Fill;
+            tableLayoutPanelFolderExportDetails.Location = new Point(3, 23);
+            tableLayoutPanelFolderExportDetails.Name = "tableLayoutPanelFolderExportDetails";
+            tableLayoutPanelFolderExportDetails.RowCount = 4;
+            tableLayoutPanelFolderExportDetails.RowStyles.Add(new RowStyle(SizeType.Absolute, 40F));
+            tableLayoutPanelFolderExportDetails.RowStyles.Add(new RowStyle(SizeType.Absolute, 40F));
+            tableLayoutPanelFolderExportDetails.RowStyles.Add(new RowStyle(SizeType.Absolute, 40F));
+            tableLayoutPanelFolderExportDetails.RowStyles.Add(new RowStyle());
+            tableLayoutPanelFolderExportDetails.Size = new Size(600, 340);
+            tableLayoutPanelFolderExportDetails.TabIndex = 0;
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Location = new Point(3, 0);
+            label5.Name = "label5";
+            label5.Size = new Size(137, 20);
+            label5.TabIndex = 0;
+            label5.Text = "Archive root folder:";
+            // 
+            // flowLayoutPanelArchiveRootFolder
+            // 
+            flowLayoutPanelArchiveRootFolder.Controls.Add(buttonSelectArchiveRootFolder);
+            flowLayoutPanelArchiveRootFolder.Controls.Add(labelArchiveRootFolder);
+            flowLayoutPanelArchiveRootFolder.Dock = DockStyle.Fill;
+            flowLayoutPanelArchiveRootFolder.FlowDirection = FlowDirection.RightToLeft;
+            flowLayoutPanelArchiveRootFolder.Location = new Point(146, 3);
+            flowLayoutPanelArchiveRootFolder.Name = "flowLayoutPanelArchiveRootFolder";
+            flowLayoutPanelArchiveRootFolder.Size = new Size(451, 34);
+            flowLayoutPanelArchiveRootFolder.TabIndex = 1;
+            // 
+            // buttonSelectArchiveRootFolder
+            // 
+            buttonSelectArchiveRootFolder.AutoSize = true;
+            buttonSelectArchiveRootFolder.Location = new Point(413, 3);
+            buttonSelectArchiveRootFolder.Name = "buttonSelectArchiveRootFolder";
+            buttonSelectArchiveRootFolder.Size = new Size(35, 30);
+            buttonSelectArchiveRootFolder.TabIndex = 0;
+            buttonSelectArchiveRootFolder.Text = "...";
+            buttonSelectArchiveRootFolder.UseVisualStyleBackColor = true;
+            buttonSelectArchiveRootFolder.Click += buttonSelectArchiveRootFolder_Click;
+            // 
+            // labelArchiveRootFolder
+            // 
+            labelArchiveRootFolder.Location = new Point(18, 0);
+            labelArchiveRootFolder.Name = "labelArchiveRootFolder";
+            labelArchiveRootFolder.Size = new Size(389, 27);
+            labelArchiveRootFolder.TabIndex = 1;
             // 
             // groupBoxSelectedFolderDetails
             // 
@@ -345,6 +423,11 @@
             ((System.ComponentModel.ISupportInitialize)splitContainerOutlookStores).EndInit();
             splitContainerOutlookStores.ResumeLayout(false);
             groupBoxOutlookStoreFolders.ResumeLayout(false);
+            groupBoxExportDetails.ResumeLayout(false);
+            tableLayoutPanelFolderExportDetails.ResumeLayout(false);
+            tableLayoutPanelFolderExportDetails.PerformLayout();
+            flowLayoutPanelArchiveRootFolder.ResumeLayout(false);
+            flowLayoutPanelArchiveRootFolder.PerformLayout();
             groupBoxSelectedFolderDetails.ResumeLayout(false);
             tableLayoutPanelSelectedFolderDetails.ResumeLayout(false);
             tableLayoutPanelSelectedFolderDetails.PerformLayout();
@@ -384,5 +467,12 @@
         private Label labelSelectedFolderFullPath;
         private Label labelSelectedFolderNumberOfSubfolders;
         private Label labelSelectedFolderNumberOfEmailItems;
+        private GroupBox groupBoxExportDetails;
+        private TableLayoutPanel tableLayoutPanelFolderExportDetails;
+        private Label label5;
+        private FlowLayoutPanel flowLayoutPanelArchiveRootFolder;
+        private Button buttonSelectArchiveRootFolder;
+        private Label labelArchiveRootFolder;
+        private FolderBrowserDialog folderBrowserDialogArchiveRootFolder;
     }
 }

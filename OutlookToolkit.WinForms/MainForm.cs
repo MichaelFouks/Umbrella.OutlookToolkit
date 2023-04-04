@@ -98,6 +98,12 @@ namespace OutlookToolkit.WinForms
 
                         break;
                     }
+                case "ArchiveFolderPath":
+                    {
+                        labelArchiveRootFolder.Text = folderBrowserDialogArchiveRootFolder.SelectedPath;
+                        
+                        break;
+                    }
             }
         }
 
@@ -127,6 +133,14 @@ namespace OutlookToolkit.WinForms
         private void treeViewOutlookStoreFolders_AfterSelect(object sender, TreeViewEventArgs e)
         {
             controller.GetFolderExportGetails(viewModel.StoreName, e.Node.Tag as string);
+        }
+
+        private void buttonSelectArchiveRootFolder_Click(object sender, EventArgs e)
+        {
+            if (folderBrowserDialogArchiveRootFolder.ShowDialog() == DialogResult.OK)
+            {
+                viewModel.ArchiveFolderPath = folderBrowserDialogArchiveRootFolder.SelectedPath;
+            }
         }
     }
 }
