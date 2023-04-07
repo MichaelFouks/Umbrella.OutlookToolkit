@@ -221,25 +221,33 @@ namespace Umbrella.OutlookToolkit
 
                         #region Get Mail Item information
 
-                        string senderEmailAddress = mailItem.SenderEmailAddress;
-                        string senderName = mailItem.SenderName;
+                        string senderEmailAddress = mailItem.SenderEmailAddress.Trim();
+                        string senderName = mailItem.SenderName.Trim();
                         DateTime sent = mailItem.SentOn;
-                        string to = mailItem.To ?? "";
-                        string cc = mailItem.CC ?? "";
-                        string bcc = mailItem.BCC ?? "";
-                        string subject = mailItem.Subject ?? "";
-                        string body = mailItem.Body ?? "";
+                        string to = string.IsNullOrEmpty(mailItem.To) ? string.Empty : mailItem.To.Trim();
+                        string cc = string.IsNullOrEmpty(mailItem.CC) ? string.Empty : mailItem.CC.Trim();
+                        string bcc = string.IsNullOrEmpty(mailItem.BCC) ? string.Empty : mailItem.BCC.Trim();
+                        string subject = string.IsNullOrEmpty(mailItem.Subject) ? string.Empty : mailItem.Subject.Trim();
+                        string body = string.IsNullOrEmpty(mailItem.Body) ? string.Empty : mailItem.Body.Trim();
+                        int numberOfAttachments = mailItem.Attachments.Count;
 
                         #endregion
 
                         // create folders by sender
                         DirectoryInfo folderBySenderEmailAddress = archiveDirectory;
+                        string folderName = string.Empty;
                         if (IsValidEmail(senderEmailAddress))
                         {
-                            string folderName =
+                            folderName =
                                 mapiFolderToExport.Name == "Sent Items"
                                     ? $"{CleanDirectoryName(string.IsNullOrEmpty(to) ? cc : to)}"
-                                    : $"{CleanDirectoryName(senderName)} from {senderEmailAddress}";
+                                    //: $"{CleanDirectoryName(senderName)} from {senderEmailAddress}";
+                                    : $"{CleanDirectoryName(senderName)}";
+                            if (folderName.Length > 75)
+                            {
+                                folderName = folderName[..75];
+                            }
+
                             folderBySenderEmailAddress = archiveDirectory.CreateSubdirectory(CleanDirectoryName(folderName));
                         }
 
@@ -247,30 +255,48 @@ namespace Umbrella.OutlookToolkit
                         DirectoryInfo folderBySentOn = archiveDirectory.CreateSubdirectory(sent.ToString("yyyy-MM-dd"));
 
                         // Format archive file content
-                        string fileName =
-                                mapiFolderToExport.Name == "Sent Items"
-                                    ? $"{CleanDirectoryName(string.IsNullOrEmpty(to) ? cc : to)}"
-                                    : $"{CleanDirectoryName(senderName)} from {senderEmailAddress}";
-                        fileName = $"{fileName} on {sent:yyyy-MM-dd HH-mm-ss}.txt";
+                        string fileName = $"{folderName} on {sent:yyyy-MM-dd HH-mm-ss}";
 
                         string content = 
 $@"From: {senderName}, {senderEmailAddress}
 To: {to}; CC: {cc}; BCC: {bcc}
 Sent on: {sent:yyyy-MM-dd HH:mm:ss}
+Attachments: {numberOfAttachments}
 Subject: {subject}
 Message:
 {body}";
 
                         // Save message info in files
-                        using (StreamWriter outputFileByEmail = new(Path.Combine(folderBySenderEmailAddress.FullName, fileName)))
+                        using (StreamWriter outputFileByEmail = new(Path.Combine(folderBySenderEmailAddress.FullName, $"{fileName}.txt")))
                         {
                             outputFileByEmail.Write(content);
                         }
-                        using (StreamWriter outputFileByEmail = new(Path.Combine(folderBySentOn.FullName, fileName)))
+                        using (StreamWriter outputFileBySentOn = new(Path.Combine(folderBySentOn.FullName, $"{fileName}.txt")))
                         {
-                            outputFileByEmail.Write(content);
+                            outputFileBySentOn.Write(content);
                         }
 
+                        // Work with attachments
+                        if(numberOfAttachments > 0)
+                        {
+                            // Create attachment folders
+                            DirectoryInfo attachmentFolderBySenderEmailAddress = folderBySenderEmailAddress.CreateSubdirectory($"{fileName}.attachments");
+                            DirectoryInfo attachmentFolderBySentOn = folderBySentOn.CreateSubdirectory($"{fileName}.attachments");
+
+                            // Loop though attachments and save them as files
+                            foreach(Microsoft.Office.Interop.Outlook.Attachment attachment in mailItem.Attachments)
+                            {
+                                try
+                                {
+                                    attachment.SaveAsFile(Path.Combine(attachmentFolderBySenderEmailAddress.FullName, attachment.FileName));
+                                    attachment.SaveAsFile(Path.Combine(attachmentFolderBySentOn.FullName, attachment.FileName));
+                                }
+                                catch (System.Exception ex)
+                                {
+                                    Debug.WriteLine(ex);
+                                }
+                            }
+                        }
                     }
                     catch (System.Exception ex) 
                     { 
