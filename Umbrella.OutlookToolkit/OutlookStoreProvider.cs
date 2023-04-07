@@ -216,12 +216,22 @@ namespace Umbrella.OutlookToolkit
             {
                 if (item is MailItem mailItem)
                 {
+                    #region Get Mail Item information
+
                     string senderEmailAddress = mailItem.SenderEmailAddress;
-                    if(IsValidEmail(senderEmailAddress))
+                    DateTime sent = mailItem.SentOn;
+
+                    #endregion
+
+                    // create folders by sender
+                    DirectoryInfo folderBySenderEmailAddress;
+                    if (IsValidEmail(senderEmailAddress))
                     {
-                        archiveDirectory.CreateSubdirectory(senderEmailAddress);
+                        folderBySenderEmailAddress = archiveDirectory.CreateSubdirectory(senderEmailAddress);
                     }
-                    
+
+                    // create folders by sent date
+                    DirectoryInfo folderBySentOn = archiveDirectory.CreateSubdirectory(sent.ToString("yyyy-MM-dd"));
                 }
 
                 GC.Collect();
