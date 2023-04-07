@@ -77,5 +77,19 @@ namespace OutlookToolkit.WinForms
             IStoreProvider provider = new OutlookStoreProvider(outlookStoreName);
             mainFormViewModel.SelectedStoreFolder = provider.GetStoreFolder(folderEntryId);
         }
+
+        internal void ExportFolder(string outlookStoreName)
+        {
+            if (outlookStoreName is null || string.IsNullOrEmpty(outlookStoreName))
+            {
+                throw new ArgumentNullException(nameof(outlookStoreName));
+            }
+
+            IStoreProvider provider = new OutlookStoreProvider(outlookStoreName);
+            provider.ExportFolder(
+                mainFormViewModel.SelectedStoreFolder.EntryId, 
+                mainFormViewModel.ArchiveFolderPath
+            );
+        }
     }
 }

@@ -68,5 +68,10 @@ namespace Umbrella.OutlookToolkit
         {
             throw new NotImplementedException();
         }
+
+        public void ExportFolder(string folderEntryId, string archiveRootFolder)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

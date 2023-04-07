@@ -5,6 +5,8 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
+using System.Net.Mail;
 
 namespace Umbrella.OutlookToolkit
 {
@@ -170,6 +172,66 @@ namespace Umbrella.OutlookToolkit
             }
 
             return null;
+        }
+
+        public void ExportFolder(string folderEntryId, string archiveRootFolder)
+        {
+            if (folderEntryId == null || string.IsNullOrEmpty(folderEntryId))
+            {
+                throw new ArgumentNullException(nameof(folderEntryId));
+            }
+            if (archiveRootFolder == null || string.IsNullOrEmpty(archiveRootFolder))
+            {
+                throw new ArgumentNullException(nameof(archiveRootFolder));
+            }
+
+            Application application = new();
+            NameSpace outlookNamespaces = application.GetNamespace("MAPI");
+
+            // Login using default profile
+            outlookNamespaces.Logon(application.DefaultProfileName);
+
+            Store store = outlookNamespaces.Stores[storeName];
+            MAPIFolder rootFolder = store.GetRootFolder();
+
+            MAPIFolder? mapiFolderToExport = null;
+            foreach (MAPIFolder childFolder in rootFolder.Folders)
+            {
+                if (childFolder.EntryID == folderEntryId)
+                {
+                    mapiFolderToExport = childFolder; 
+
+                    break;
+                }
+            }
+
+            if(mapiFolderToExport == null)
+            {
+                return;
+            }
+
+            DirectoryInfo archiveDirectory = new DirectoryInfo(archiveRootFolder);
+
+            foreach (object item in mapiFolderToExport.Items)
+            {
+                if (item is MailItem mailItem)
+                {
+                    string senderEmailAddress = mailItem.SenderEmailAddress;
+                    if(IsValidEmail(senderEmailAddress))
+                    {
+                        archiveDirectory.CreateSubdirectory(senderEmailAddress);
+                    }
+                    
+                }
+
+                GC.Collect();
+            }
+        }
+
+
+        private static bool IsValidEmail(string email)
+        {
+            return MailAddress.TryCreate(email, out _);
         }
     }
 }

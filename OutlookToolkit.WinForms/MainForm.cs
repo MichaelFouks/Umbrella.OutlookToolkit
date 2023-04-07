@@ -15,6 +15,7 @@ namespace OutlookToolkit.WinForms
             toolStripOutlookStores.Visible = false;
             splitContainerOutlookStores.Visible = false;
             groupBoxSelectedFolderDetails.Visible = false;
+            buttonStartFolderExport.Visible = false;
 
             controller = controllerIn;
 
@@ -100,8 +101,9 @@ namespace OutlookToolkit.WinForms
                     }
                 case "ArchiveFolderPath":
                     {
-                        labelArchiveRootFolder.Text = folderBrowserDialogArchiveRootFolder.SelectedPath;
-                        
+                        labelArchiveRootFolder.Text = viewModel.ArchiveFolderPath;
+                        buttonStartFolderExport.Visible = viewModel.ArchiveFolderPath != null;
+
                         break;
                     }
             }
@@ -141,6 +143,11 @@ namespace OutlookToolkit.WinForms
             {
                 viewModel.ArchiveFolderPath = folderBrowserDialogArchiveRootFolder.SelectedPath;
             }
+        }
+
+        private void buttonStartFolderExport_Click(object sender, EventArgs e)
+        {
+            controller.ExportFolder(viewModel.StoreName);
         }
     }
 }

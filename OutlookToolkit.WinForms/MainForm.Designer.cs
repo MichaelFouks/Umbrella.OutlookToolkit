@@ -49,6 +49,7 @@
             flowLayoutPanelArchiveRootFolder = new FlowLayoutPanel();
             buttonSelectArchiveRootFolder = new Button();
             labelArchiveRootFolder = new Label();
+            buttonStartFolderExport = new Button();
             groupBoxSelectedFolderDetails = new GroupBox();
             tableLayoutPanelSelectedFolderDetails = new TableLayoutPanel();
             label1 = new Label();
@@ -228,6 +229,7 @@
             tableLayoutPanelFolderExportDetails.ColumnStyles.Add(new ColumnStyle());
             tableLayoutPanelFolderExportDetails.Controls.Add(label5, 0, 0);
             tableLayoutPanelFolderExportDetails.Controls.Add(flowLayoutPanelArchiveRootFolder, 1, 0);
+            tableLayoutPanelFolderExportDetails.Controls.Add(buttonStartFolderExport, 1, 2);
             tableLayoutPanelFolderExportDetails.Dock = DockStyle.Fill;
             tableLayoutPanelFolderExportDetails.Location = new Point(3, 23);
             tableLayoutPanelFolderExportDetails.Name = "tableLayoutPanelFolderExportDetails";
@@ -276,6 +278,17 @@
             labelArchiveRootFolder.Name = "labelArchiveRootFolder";
             labelArchiveRootFolder.Size = new Size(389, 27);
             labelArchiveRootFolder.TabIndex = 1;
+            // 
+            // buttonStartFolderExport
+            // 
+            buttonStartFolderExport.AutoSize = true;
+            buttonStartFolderExport.Location = new Point(146, 83);
+            buttonStartFolderExport.Name = "buttonStartFolderExport";
+            buttonStartFolderExport.Size = new Size(143, 30);
+            buttonStartFolderExport.TabIndex = 2;
+            buttonStartFolderExport.Text = "Start Folder Export";
+            buttonStartFolderExport.UseVisualStyleBackColor = true;
+            buttonStartFolderExport.Click += buttonStartFolderExport_Click;
             // 
             // groupBoxSelectedFolderDetails
             // 
@@ -474,5 +487,6 @@
         private Button buttonSelectArchiveRootFolder;
         private Label labelArchiveRootFolder;
         private FolderBrowserDialog folderBrowserDialogArchiveRootFolder;
+        private Button buttonStartFolderExport;
     }
 }

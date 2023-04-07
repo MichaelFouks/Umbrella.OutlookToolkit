@@ -13,5 +13,7 @@ namespace Umbrella.OutlookToolkit
         public StoreFolder GetStoreFolders();
 
         public StoreFolder? GetStoreFolder(string entryId);
+
+        public void ExportFolder(string folderEntryId, string archiveRootFolder);
     }
 }
