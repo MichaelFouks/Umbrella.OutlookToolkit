@@ -216,22 +216,38 @@ namespace Umbrella.OutlookToolkit
             {
                 if (item is MailItem mailItem)
                 {
-                    #region Get Mail Item information
-
-                    string senderEmailAddress = mailItem.SenderEmailAddress;
-                    DateTime sent = mailItem.SentOn;
-
-                    #endregion
-
-                    // create folders by sender
-                    DirectoryInfo folderBySenderEmailAddress;
-                    if (IsValidEmail(senderEmailAddress))
+                    try
                     {
-                        folderBySenderEmailAddress = archiveDirectory.CreateSubdirectory(senderEmailAddress);
-                    }
 
-                    // create folders by sent date
-                    DirectoryInfo folderBySentOn = archiveDirectory.CreateSubdirectory(sent.ToString("yyyy-MM-dd"));
+                        #region Get Mail Item information
+
+                        string senderEmailAddress = mailItem.SenderEmailAddress;
+                        string senderName = mailItem.SenderName;
+                        DateTime sent = mailItem.SentOn;
+                        string to = mailItem.To ?? "";
+                        string cc = mailItem.CC ?? "";
+                        string bcc = mailItem.BCC ?? "";
+
+                        #endregion
+
+                        // create folders by sender
+                        DirectoryInfo folderBySenderEmailAddress;
+                        if (IsValidEmail(senderEmailAddress))
+                        {
+                            string folderName =
+                                mapiFolderToExport.Name == "Sent Items"
+                                    ? $"{CleanDirectoryName(string.IsNullOrEmpty(to) ? cc : to)}"
+                                    : $"{CleanDirectoryName(senderName)} from {senderEmailAddress}";
+                            folderBySenderEmailAddress = archiveDirectory.CreateSubdirectory(folderName);
+                        }
+
+                        // create folders by sent date
+                        DirectoryInfo folderBySentOn = archiveDirectory.CreateSubdirectory(sent.ToString("yyyy-MM-dd"));
+                    }
+                    catch(System.Exception ex) 
+                    { 
+                        Debug.WriteLine(ex);
+                    }
                 }
 
                 GC.Collect();
@@ -242,6 +258,13 @@ namespace Umbrella.OutlookToolkit
         private static bool IsValidEmail(string email)
         {
             return MailAddress.TryCreate(email, out _);
+        }
+        private static string CleanDirectoryName(string inFolderName)
+        {
+            return inFolderName
+                .Replace(":", "")
+                .Replace("<", "")
+                .Replace(">", "");
         }
     }
 }
