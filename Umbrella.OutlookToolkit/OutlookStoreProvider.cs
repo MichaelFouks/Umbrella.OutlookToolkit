@@ -227,24 +227,52 @@ namespace Umbrella.OutlookToolkit
                         string to = mailItem.To ?? "";
                         string cc = mailItem.CC ?? "";
                         string bcc = mailItem.BCC ?? "";
+                        string subject = mailItem.Subject ?? "";
+                        string body = mailItem.Body ?? "";
 
                         #endregion
 
                         // create folders by sender
-                        DirectoryInfo folderBySenderEmailAddress;
+                        DirectoryInfo folderBySenderEmailAddress = archiveDirectory;
                         if (IsValidEmail(senderEmailAddress))
                         {
                             string folderName =
                                 mapiFolderToExport.Name == "Sent Items"
                                     ? $"{CleanDirectoryName(string.IsNullOrEmpty(to) ? cc : to)}"
                                     : $"{CleanDirectoryName(senderName)} from {senderEmailAddress}";
-                            folderBySenderEmailAddress = archiveDirectory.CreateSubdirectory(folderName);
+                            folderBySenderEmailAddress = archiveDirectory.CreateSubdirectory(CleanDirectoryName(folderName));
                         }
 
                         // create folders by sent date
                         DirectoryInfo folderBySentOn = archiveDirectory.CreateSubdirectory(sent.ToString("yyyy-MM-dd"));
+
+                        // Format archive file content
+                        string fileName =
+                                mapiFolderToExport.Name == "Sent Items"
+                                    ? $"{CleanDirectoryName(string.IsNullOrEmpty(to) ? cc : to)}"
+                                    : $"{CleanDirectoryName(senderName)} from {senderEmailAddress}";
+                        fileName = $"{fileName} on {sent:yyyy-MM-dd HH-mm-ss}.txt";
+
+                        string content = 
+$@"From: {senderName}, {senderEmailAddress}
+To: {to}; CC: {cc}; BCC: {bcc}
+Sent on: {sent:yyyy-MM-dd HH:mm:ss}
+Subject: {subject}
+Message:
+{body}";
+
+                        // Save message info in files
+                        using (StreamWriter outputFileByEmail = new(Path.Combine(folderBySenderEmailAddress.FullName, fileName)))
+                        {
+                            outputFileByEmail.Write(content);
+                        }
+                        using (StreamWriter outputFileByEmail = new(Path.Combine(folderBySentOn.FullName, fileName)))
+                        {
+                            outputFileByEmail.Write(content);
+                        }
+
                     }
-                    catch(System.Exception ex) 
+                    catch (System.Exception ex) 
                     { 
                         Debug.WriteLine(ex);
                     }
@@ -262,9 +290,16 @@ namespace Umbrella.OutlookToolkit
         private static string CleanDirectoryName(string inFolderName)
         {
             return inFolderName
+                .Replace("\\", "")
+                .Replace("/", "")
                 .Replace(":", "")
+                .Replace("*", "")
+                .Replace("?", "")
                 .Replace("<", "")
-                .Replace(">", "");
+                .Replace(">", "")
+                .Replace("|", "")
+                .Replace("\"", "")
+                ;
         }
     }
 }
